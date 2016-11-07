@@ -9,10 +9,10 @@ public class Matrix {
     public Matrix(int rowCount, int columnCount) {
         this.rowCount = rowCount;
         this.columnCount = columnCount;
-        if (!checkSize(rowCount)) {
+        if (!checkSizeOnNonNegativity(rowCount)) {
             this.rowCount = 0;
         }
-        if (!checkSize(columnCount)) {
+        if (!checkSizeOnNonNegativity(columnCount)) {
             this.columnCount = 0;
         }
         this.matrix = new int[rowCount][columnCount];
@@ -42,14 +42,14 @@ public class Matrix {
         if (!checkArray(array)) {
             throw new IllegalArgumentException("Неподходящая матрица.");
         }
-        if (!checkRowNumber(array.length)) {
+        if (array.length != this.rowCount) {
             throw new IllegalArgumentException("Неверное количество строк.");
         }
-        if (!checkColumnNumber(array[0].length)) {
+        if (array[0].length != this.columnCount) {
             throw new IllegalArgumentException("Неверное количество колонок.");
         }
-        for (int rowNumber = 0; rowNumber < rowCount; rowNumber++) {
-            for (int columnNumber = 0; columnNumber < columnCount; columnNumber++) {
+        for (int rowNumber = 0; rowNumber < this.rowCount; rowNumber++) {
+            for (int columnNumber = 0; columnNumber < this.columnCount; columnNumber++) {
                 this.matrix[rowNumber][columnNumber] = array[rowNumber][columnNumber];
             }
         }
@@ -77,7 +77,7 @@ public class Matrix {
         Matrix result = new Matrix(this.rowCount, second.getColumnCount());
         for (int rowNumber = 0; rowNumber < this.rowCount; rowNumber++) {
             for (int columnNumber = 0; columnNumber < second.getColumnCount(); columnNumber++) {
-                int value = multiplyVector(this.getRow(rowNumber), getColumn(second, columnNumber));
+                int value = multiplyVector(getRow(rowNumber), getColumn(second, columnNumber));
                 result.setElement(rowNumber, columnNumber, value);
             }
         }
@@ -101,10 +101,10 @@ public class Matrix {
             return minor[0][0];
         }
         int result = 0;
-        for (int ColumnNumberExpansionsN = 0; ColumnNumberExpansionsN < level; ColumnNumberExpansionsN++) {
-            int sign = (int)Math.pow(-1, ROW_NUMBER_EXPANSION + ColumnNumberExpansionsN);
-            int determinantMinor = getDeterminantMinor(getMinor(minor, ROW_NUMBER_EXPANSION, ColumnNumberExpansionsN));
-            result += sign * minor[ROW_NUMBER_EXPANSION][ColumnNumberExpansionsN] * determinantMinor;
+        for (int ColumnNumberExpansion = 0; ColumnNumberExpansion < level; ColumnNumberExpansion++) {
+            int sign = (int)Math.pow(-1, ROW_NUMBER_EXPANSION + ColumnNumberExpansion);
+            int determinantMinor = getDeterminantMinor(getMinor(minor, ROW_NUMBER_EXPANSION, ColumnNumberExpansion));
+            result += sign * minor[ROW_NUMBER_EXPANSION][ColumnNumberExpansion] * determinantMinor;
         }
         return result;
     }
@@ -137,7 +137,7 @@ public class Matrix {
         return columnCount;
     }
 
-    private boolean checkSize(int num) {
+    private boolean checkSizeOnNonNegativity(int num) {
         return num > 0;
     }
     private boolean checkRowNumber (int rowNumber) {
