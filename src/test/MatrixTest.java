@@ -61,7 +61,7 @@ public class MatrixTest {
         }
     }
     @Test
-    public void getDeterminant() {
+    public void findDeterminant() {
         Matrix matrix = new Matrix(3, 3);
         matrix.setMatrix(new int[][]{{5, 0, 3},
                                      {2, 1, 0},
