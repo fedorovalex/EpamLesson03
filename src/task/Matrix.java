@@ -84,17 +84,17 @@ public class Matrix {
         return result;
     }
 
-    public int getDeterminant() {
+    public int findDeterminant() {
         if (this.rowCount != this.columnCount) {
             throw new IllegalArgumentException("Матрица не квадратная.");
         }
         if (this.rowCount == 0) {
             return 0;
         }
-        return getDeterminantMinor(this.matrix);
+        return findDeterminantMinor(this.matrix);
     }
 
-    private int getDeterminantMinor(int[][] minor) {
+    private int findDeterminantMinor(int[][] minor) {
         int level = minor.length;
         int ROW_NUMBER_EXPANSION = 1;
         if (level == 1) {
@@ -103,7 +103,7 @@ public class Matrix {
         int result = 0;
         for (int ColumnNumberExpansion = 0; ColumnNumberExpansion < level; ColumnNumberExpansion++) {
             int sign = (int)Math.pow(-1, ROW_NUMBER_EXPANSION + ColumnNumberExpansion);
-            int determinantMinor = getDeterminantMinor(getMinor(minor, ROW_NUMBER_EXPANSION, ColumnNumberExpansion));
+            int determinantMinor = findDeterminantMinor(getMinor(minor, ROW_NUMBER_EXPANSION, ColumnNumberExpansion));
             result += sign * minor[ROW_NUMBER_EXPANSION][ColumnNumberExpansion] * determinantMinor;
         }
         return result;

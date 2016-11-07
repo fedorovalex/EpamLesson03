@@ -66,7 +66,7 @@ public class MatrixTest {
         matrix.setMatrix(new int[][]{{5, 0, 3},
                                      {2, 1, 0},
                                      {1, 0, 1}});
-        assertEquals(matrix.getDeterminant(), 2);
+        assertEquals(matrix.findDeterminant(), 2);
     }
 
 }
