@@ -68,6 +68,15 @@ public class ArrayUtilsTest {
     @Test
     public void testShuffleOnPreservationElements() {
         int[] source = {13, 2, 5, 2, 4, 5, 7, 5};
-        assertEquals( ArrayUtils.equals(source, shuffle(source)), true );
+        int[] mixed = Arrays.copyOf(source, source.length);
+        shuffle(mixed);
+        assertEquals( ArrayUtils.equals(source, mixed), true );
+    }
+
+    @Test
+    public void testWriteInString() {
+        int[] source = {13, 2, 5, 2, 4, 5, 7, 5};
+        String expectation = "13; 2; 5; 2; 4; 5; 7; 5.";
+        assertTrue(expectation.equals(writeInString(source)));
     }
 }

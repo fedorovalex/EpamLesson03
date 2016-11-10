@@ -27,26 +27,25 @@ public class ArrayUtils {
         if (first.length != second.length) {
             return false;
         }
-        Arrays.sort(first);
-        Arrays.sort(second);
-        return Arrays.equals(first, second);
+        int[] copyFirst = Arrays.copyOf(first, first.length);
+        int[] copySecond = Arrays.copyOf(second, second.length);
+        Arrays.sort(copyFirst);
+        Arrays.sort(copySecond);
+        return Arrays.equals(copyFirst, copySecond);
     }
 
-    public static int[] shuffle(int[] array) {
+    public static void shuffle(int[] array) {
         if (array == null || array.length == 0) {
-            return new int[0];
+            return;
         }
         Random random = new Random();
         for (int i = 0; i < array.length; i++) {
-            int indexReplacement = abs(random.nextInt()) % array.length;
-            int valueReplacement = array[indexReplacement];
-            array[indexReplacement] = array[i];
-            array[i] = valueReplacement;
+            int indexReplacement = abs(random.nextInt(array.length));
+            swap(array, indexReplacement, i);
         }
-        return array;
     }
 
-    public static String getString(int[] array) {
+    public static String writeInString(int[] array) {
         if (array == null) {
             return "Array is empty.";
         }
@@ -55,10 +54,16 @@ public class ArrayUtils {
         }
         String result = "";
         for (int i = 0; i < array.length - 1; i++) {
-            result += array[i] + ";  ";
+            result += array[i] + "; ";
         }
         result += array[array.length - 1] + ".";
         return result;
+    }
+
+    private static void swap(int[] array, int firstIndex, int secondIndex) {
+        int replacement = array[firstIndex];
+        array[firstIndex] = array[secondIndex];
+        array[secondIndex] = replacement;
     }
 
 }

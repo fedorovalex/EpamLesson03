@@ -1,19 +1,20 @@
 package test;
 
 import org.junit.Test;
-import task.Matrix;
+import task.matrix.Matrix;
+import task.matrix.MatrixConverter;
 
 import static org.junit.Assert.*;
-import static task.ArrayUtils.*;
 
 public class MatrixTest {
 
     @Test
     public void getElementTest() {
-        Matrix matrix = new Matrix(3, 2);
-        matrix.setMatrix(new int[][]{{1, 2},
-                                     {3, 4},
-                                     {5, 6}});
+        MatrixConverter converter = new MatrixConverter();
+        Matrix matrix = converter.convertArrayToMatrix(new int[][]{
+                                                                    {1, 2},
+                                                                    {3, 4},
+                                                                    {5, 6}});
         assertEquals(matrix.getElement(2, 0), 5);
     }
     @Test
@@ -27,14 +28,16 @@ public class MatrixTest {
         assertEquals(matrix.getColumnCount(), 2);
     }
     @Test
-    public void toFoldTest() {
-        Matrix first = new Matrix(2, 2);
-        first.setMatrix(new int[][]{{1, 2},
-                                    {3, 4}});
-        Matrix second = new Matrix(2, 2);
-        second.setMatrix(new int[][]{{1, 1},
-                                     {2, 2}});
-        Matrix testMatrix = first.toFold(second);
+    public void addTest() {
+        MatrixConverter converter = new MatrixConverter();
+        Matrix first = converter.convertArrayToMatrix(new int[][]{
+                                                                {1, 2},
+                                                                {3, 4}});
+
+        Matrix second = converter.convertArrayToMatrix(new int[][]{
+                                                                {1, 1},
+                                                                {2, 2}});
+        Matrix testMatrix = first.add(second);
         int[][] expectation = {{2, 3},
                                {5, 6}};
         for (int rowNumber = 0; rowNumber < testMatrix.getRowCount(); rowNumber++) {
@@ -45,12 +48,13 @@ public class MatrixTest {
     }
     @Test
     public void multiplyTest() {
-        Matrix first = new Matrix(2, 2);
-        first.setMatrix(new int[][]{{1, 2},
-                                    {3, 4}});
-        Matrix second = new Matrix(2, 2);
-        second.setMatrix(new int[][]{{1, 1},
-                                     {2, 2}});
+        MatrixConverter converter = new MatrixConverter();
+        Matrix first = converter.convertArrayToMatrix(new int[][]{
+                                                                {1, 2},
+                                                                {3, 4}});
+        Matrix second = converter.convertArrayToMatrix(new int[][]{
+                                                                {1, 1},
+                                                                {2, 2}});
         Matrix testMatrix = first.multiply(second);
         int[][] expectation = {{5, 5},
                                {11, 11}};
@@ -62,10 +66,11 @@ public class MatrixTest {
     }
     @Test
     public void findDeterminant() {
-        Matrix matrix = new Matrix(3, 3);
-        matrix.setMatrix(new int[][]{{5, 0, 3},
-                                     {2, 1, 0},
-                                     {1, 0, 1}});
+        MatrixConverter converter = new MatrixConverter();
+        Matrix matrix = converter.convertArrayToMatrix(new int[][]{
+                                                                {5, 0, 3},
+                                                                {2, 1, 0},
+                                                                {1, 0, 1}});
         assertEquals(matrix.findDeterminant(), 2);
     }
 
