@@ -74,4 +74,31 @@ public class MatrixTest {
         assertEquals(matrix.findDeterminant(), 2);
     }
 
+    @Test
+    public void cloneTestOnSimilarity() {
+        MatrixConverter converter = new MatrixConverter();
+        Matrix matrix = converter.convertArrayToMatrix(new int[][]{
+                {5, 0, 3},
+                {2, 1, 0},
+                {1, 0, 1}});
+        Matrix copy = matrix.clone();
+        for (int rowNumber = 0; rowNumber < matrix.getRowCount(); rowNumber++) {
+            for (int columnNumber = 0; columnNumber < matrix.getColumnCount(); columnNumber++) {
+                assertEquals(matrix.getElement(rowNumber, columnNumber), copy.getElement(rowNumber, columnNumber));
+            }
+        }
+    }
+
+    @Test
+    public void cloneTestOnPersonality() {
+        MatrixConverter converter = new MatrixConverter();
+        Matrix matrix = converter.convertArrayToMatrix(new int[][]{
+                {5, 0, 3},
+                {2, 1, 0},
+                {1, 0, 1}});
+        Matrix copy = matrix.clone();
+        matrix.setElement(1, 1, 5);
+        assertEquals(copy.getElement(1, 1), 1);
+    }
+
 }

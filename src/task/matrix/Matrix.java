@@ -4,7 +4,7 @@ package task.matrix;
 import task.vector.Vector;
 import task.vector.VectorConverter;
 
-public class Matrix {
+public class Matrix implements Cloneable {
     private int[][] matrix;
 
     public Matrix(int rowCount, int columnCount) {
@@ -67,6 +67,16 @@ public class Matrix {
             return 0;
         }
         return findDeterminantMinor(this.matrix);
+    }
+
+    public Matrix clone() {
+        Matrix copy = new Matrix(getRowCount(), getColumnCount());
+        for (int rowNumber = 0; rowNumber< getRowCount(); rowNumber++) {
+            for (int columnNumber = 0; columnNumber < getColumnCount(); columnNumber++) {
+                copy.setElement(rowNumber, columnNumber, this.matrix[rowNumber][columnNumber]);
+            }
+        }
+        return copy;
     }
 
     public int getRowCount() {
