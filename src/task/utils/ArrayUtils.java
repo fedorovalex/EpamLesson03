@@ -1,7 +1,8 @@
-package task;
+package task.utils;
 
 import java.util.Arrays;
 import java.util.Random;
+import task.utils.predicate.Predicate;
 
 import static java.lang.Math.abs;
 
@@ -58,6 +59,21 @@ public class ArrayUtils {
         }
         result += array[array.length - 1] + ".";
         return result;
+    }
+
+    public static int[] filter(int[] array, Predicate predicate) {
+        if (array == null || array.length == 0) {
+            return new int[0];
+        }
+        int[] result = new int[array.length];
+        int resultNumber = 0;
+        for (int arrayValue: array) {
+            if (predicate.checkCondition(arrayValue)) {
+                result[resultNumber] = arrayValue;
+                resultNumber++;
+            }
+        }
+        return Arrays.copyOf(result, resultNumber);
     }
 
     private static void swap(int[] array, int firstIndex, int secondIndex) {
